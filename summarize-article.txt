@@ -1,0 +1,16 @@
+summarize-article:
+	demo urls for testing:
+		1. https://www.businessinsider.in/tech/news/in-the-battle-of-wifi-versus-mesh-networks-the-latter-has-the-edge-two-tech-leaders-share-why-/articleshow/114559916.cms
+		2. https://www.businessinsider.com/attention-series-a-analyze-sales-calls-ai-2024-10
+		3. https://www.businessinsider.in/stock-market/news/waaree-energies-ipo-allotment-how-to-check-allotment-ipo-gmp-listing-date-and-more/articleshow/114508632.cms
+
+extract-entities:
+	demo urls for testing:
+		1. https://www.businessinsider.in/business/startups/news/my-company-is-like-my-daughter-it-was-an-emotional-setback-paytm-founder-vijay-shekhar-sharma/articleshow/111551276.cms
+
+get-similar-articles:
+	demo urls for testing:
+		1. Main: https://www.businessinsider.in/tech/news/elon-musk-is-ready-to-make-his-biggest-pitch-yet-that-tesla-is-more-than-just-a-car-company/articleshow/114022113.cms
+		2. Test: https://www.businessinsider.in/tech/news/elon-musk-wants-to-take-humanoid-robots-mainstream-with-optimus-making-them-the-biggest-product-ever-will-be-tough-/articleshow/114156188.cms
+		3. Test: https://www.businessinsider.in/tech/news/elon-musk-says-hes-learned-a-lesson/articleshow/113398353.cms
+		4. Test: https://www.businessinsider.in/entertainment/news/matt-leblanc-pays-tribute-to-his-friends-costar-matthew-perry-ill-never-forget-you/articleshow/105217539.cms
