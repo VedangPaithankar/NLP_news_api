@@ -1,4 +1,4 @@
-const { fetchArticleContent, analyzeSentiment } = require('../services/nlpServices');
+import { fetchArticleContent, analyzeSentiment } from '../services/nlpServices.js';
 
 /**
  * Analyzes the sentiment of an article fetched from the given URL.
@@ -6,8 +6,7 @@ const { fetchArticleContent, analyzeSentiment } = require('../services/nlpServic
  * @param {Object} req - The request object containing the URL in the body.
  * @param {Object} res - The response object used to send back the sentiment analysis result.
  */
-
-exports.analyzeArticleSentiment = async (req, res) => {
+export const analyzeArticleSentiment = async (req, res) => {
     const { url } = req.body;
 
     // Check if URL is provided

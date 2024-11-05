@@ -1,4 +1,4 @@
-const { fetchArticleContent, translateText, summarizeText } = require('../services/nlpServices');
+import { fetchArticleContent, translateText, summarizeText } from '../services/nlpServices.js';
 
 /**
  * Translates the content of an article based on the given URL and target language.
@@ -6,8 +6,7 @@ const { fetchArticleContent, translateText, summarizeText } = require('../servic
  * @param {Object} req - The request object containing the URL and target language.
  * @param {Object} res - The response object used to send back the translation results.
  */
-
-exports.translateArticle = async (req, res) => {
+export const translateArticle = async (req, res) => {
     const { url, target_language } = req.body;
 
     // Check if URL and target language are provided

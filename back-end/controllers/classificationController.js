@@ -1,7 +1,7 @@
-const { fetchArticleContent } = require('../services/nlpServices');
-const { HfInference } = require('@huggingface/inference');
+import { fetchArticleContent } from '../services/nlpServices.js';
+import { HfInference } from '@huggingface/inference';
 
-const hf = new HfInference(process.env.HUGGING_FACE_API_KEY); 
+const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
 
 // Define main news categories
 const NEWS_CATEGORIES = [
@@ -65,7 +65,7 @@ async function classifyText(text) {
 /**
  * Controller function to handle article classification requests
  */
-exports.classifyArticle = async (req, res) => {
+export const classifyArticle = async (req, res) => {
     const { url } = req.body;
 
     // Check if URL is provided

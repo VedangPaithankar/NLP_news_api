@@ -1,24 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const articleController = require('../controllers/articleController');
-const sentimentController = require('../controllers/sentimentController');
-const entityController = require('../controllers/entityController');
-const keywordController = require('../controllers/keywordController');
-const topicController = require('../controllers/topicController');
-const similarityController = require('../controllers/similarityController');
-const classificationController = require('../controllers/classificationController');
-const translationController = require('../controllers/translationController');
-const searchController = require('../controllers/searchController');
+import { Router } from 'express';
+import { summarizeArticle } from '../controllers/articleController.js';
+import { analyzeArticleSentiment } from '../controllers/sentimentController.js';
+import { extractEntitiesFromArticle } from '../controllers/entityController.js';
+import { extractKeywordsFromArticle } from '../controllers/keywordController.js';
+import { getTopics } from '../controllers/topicController.js';
+import { getSimilarArticles } from '../controllers/similarityController.js';
+import { classifyArticle } from '../controllers/classificationController.js';
+import { translateArticle } from '../controllers/translationController.js';
+import { searchArticles } from '../controllers/searchController.js';
+
+const router = Router();
 
 // Define your routes
-router.post('/summarize_article', articleController.summarizeArticle);
-router.post('/analyze_sentiment', sentimentController.analyzeArticleSentiment);
-router.post('/extract_entities', entityController.extractEntitiesFromArticle);
-router.post('/extract_keywords', keywordController.extractKeywordsFromArticle);
-router.post('/get_topics', topicController.getTopics);
-router.post('/get_similar_articles', similarityController.getSimilarArticles);
-router.post('/classify_article', classificationController.classifyArticle);
-router.post('/translate_article', translationController.translateArticle);
-router.post('/search_articles', searchController.searchArticles);
+router.post('/summarize_article', summarizeArticle);
+router.post('/analyze_sentiment', analyzeArticleSentiment);
+router.post('/extract_entities', extractEntitiesFromArticle);
+router.post('/extract_keywords', extractKeywordsFromArticle);
+router.post('/get_topics', getTopics);
+router.post('/get_similar_articles', getSimilarArticles);
+router.post('/classify_article', classifyArticle);
+router.post('/translate_article', translateArticle);
+router.post('/search_articles', searchArticles);
 
-module.exports = router;
+export default router;

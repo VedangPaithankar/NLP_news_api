@@ -1,4 +1,4 @@
-const { fetchArticleContent, extractKeywords } = require('../services/nlpServices');
+import { fetchArticleContent, extractKeywords } from '../services/nlpServices.js';
 
 /**
  * Extracts keywords from an article fetched from the given URL.
@@ -6,7 +6,7 @@ const { fetchArticleContent, extractKeywords } = require('../services/nlpService
  * @param {Object} req - The request object containing the URL in the body.
  * @param {Object} res - The response object used to send back the extracted keywords.
  */
-exports.extractKeywordsFromArticle = async (req, res) => {
+export const extractKeywordsFromArticle = async (req, res) => {
     const { url } = req.body;
 
     // Check if URL is provided
@@ -25,11 +25,12 @@ exports.extractKeywordsFromArticle = async (req, res) => {
 
         // Extract keywords from the article content
         const keywords = await extractKeywords(articleContent.headline);
+
         // Send the response back to the client
         res.json({
             title: articleContent.headline,  // Article title
-            keywords,                    // Extracted keywords
-            source_url: url              // Original URL of the article
+            keywords,                        // Extracted keywords
+            source_url: url                  // Original URL of the article
         });
     } catch (error) {
         // Handle errors and send a response

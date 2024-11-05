@@ -1,8 +1,9 @@
-const { fetchArticleContent } = require('../services/nlpServices');
-const natural = require('natural');
+import { fetchArticleContent } from '../services/nlpServices.js';
+import natural from 'natural';
+import stopwords from 'stopwords';
+
 const TfIdf = natural.TfIdf;
 const tokenizer = new natural.WordTokenizer();
-const stopwords = require('stopwords').english;
 
 /**
  * Calculates cosine similarity between two vectors
@@ -12,20 +13,20 @@ const stopwords = require('stopwords').english;
  */
 function cosineSimilarity(vec1, vec2) {
     if (vec1.length !== vec2.length) return 0;
-    
+
     let dotProduct = 0;
     let norm1 = 0;
     let norm2 = 0;
-    
+
     for (let i = 0; i < vec1.length; i++) {
         dotProduct += vec1[i] * vec2[i];
         norm1 += vec1[i] * vec1[i];
         norm2 += vec2[i] * vec2[i];
     }
-    
+
     norm1 = Math.sqrt(norm1);
     norm2 = Math.sqrt(norm2);
-    
+
     return dotProduct / (norm1 * norm2);
 }
 
@@ -36,7 +37,7 @@ function cosineSimilarity(vec1, vec2) {
  */
 function preprocessText(text) {
     const tokens = tokenizer.tokenize(text.toLowerCase());
-    return tokens.filter(token => !stopwords.includes(token));
+    return tokens.filter(token => !stopwords.english.includes(token));
 }
 
 /**
@@ -46,13 +47,13 @@ function preprocessText(text) {
  */
 function createTfIdfVectors(documents) {
     const tfidf = new TfIdf();
-    
+
     // Add all documents to TF-IDF
     documents.forEach(doc => {
         const processedDoc = preprocessText(doc).join(' ');
         tfidf.addDocument(processedDoc);
     });
-    
+
     // Get all unique terms
     const terms = new Set();
     tfidf.documents.forEach(doc => {
@@ -60,7 +61,7 @@ function createTfIdfVectors(documents) {
             if (term !== '__key') terms.add(term);
         });
     });
-    
+
     // Create vectors
     const vectors = documents.map((_, docIndex) => {
         const vector = [];
@@ -69,7 +70,7 @@ function createTfIdfVectors(documents) {
         });
         return vector;
     });
-    
+
     return {
         vectors,
         terms: Array.from(terms)
@@ -81,7 +82,7 @@ function createTfIdfVectors(documents) {
  * @param {Object} req - The request object containing the query URL and article URLs in the body.
  * @param {Object} res - The response object used to send back the similarity results.
  */
-exports.getSimilarArticles = async (req, res) => {
+export const getSimilarArticles = async (req, res) => {
     const { query_url, article_urls } = req.body;
 
     // Validate input
@@ -93,14 +94,14 @@ exports.getSimilarArticles = async (req, res) => {
         // Fetch content for all articles
         const fetchPromises = [query_url, ...article_urls].map(url => fetchArticleContent(url));
         const articles = await Promise.all(fetchPromises);
-        
+
         // Extract article bodies and titles
         const articleBodies = articles.map(article => article.articleBody);
         const articleTitles = articles.map(article => article.title);
-        
+
         // Create TF-IDF vectors for all documents
         const { vectors } = createTfIdfVectors(articleBodies);
-        
+
         // Calculate similarity scores between query article and others
         const queryVector = vectors[0]; // First vector is the query article
         const similarities = vectors.slice(1).map((vector, index) => ({
@@ -108,7 +109,7 @@ exports.getSimilarArticles = async (req, res) => {
             url: article_urls[index],
             similarity: cosineSimilarity(queryVector, vector)
         }));
-        
+
         // Sort by similarity score in descending order
         const similarArticles = similarities
             .sort((a, b) => b.similarity - a.similarity)

@@ -1,4 +1,4 @@
-const { fetchArticleContent, summarizeText } = require('../services/nlpServices');
+import { fetchArticleContent, summarizeText } from '../services/nlpServices.js';
 
 /**
  * Summarizes an article fetched from the given URL.
@@ -6,8 +6,7 @@ const { fetchArticleContent, summarizeText } = require('../services/nlpServices'
  * @param {Object} req - The request object containing the URL in the body.
  * @param {Object} res - The response object used to send back the summary.
  */
-
-exports.summarizeArticle = async (req, res) => {
+export const summarizeArticle = async (req, res) => {
     const { url } = req.body;
 
     // Check if URL is provided
@@ -18,6 +17,7 @@ exports.summarizeArticle = async (req, res) => {
     try {
         // Fetch article content from the URL
         const articleContent = await fetchArticleContent(url);
+        
         // Ensure article content has the required structure
         if (!articleContent || !articleContent.articleBody || !articleContent.headline) {
             return res.status(500).json({ error: "Invalid article content structure" });
@@ -25,11 +25,12 @@ exports.summarizeArticle = async (req, res) => {
 
         // Summarize the article content
         const summarized_article = await summarizeText(articleContent.articleBody);
+        
         // Send the response back to the client
         res.json({
             title: articleContent.headline,  // Article title
-            summary: summarized_article,  // Generated summary
-            source_url: url               // Original URL of the article
+            summary: summarized_article,      // Generated summary
+            source_url: url                   // Original URL of the article
         });
     } catch (error) {
         // Handle errors and send a response

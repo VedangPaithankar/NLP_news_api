@@ -1,4 +1,4 @@
-const { fetchArticleContent, summarizeText, extractEntities } = require('../services/nlpServices');
+import { fetchArticleContent, summarizeText, extractEntities } from '../services/nlpServices.js';
 
 /**
  * Extracts named entities from an article fetched from the given URL.
@@ -6,8 +6,7 @@ const { fetchArticleContent, summarizeText, extractEntities } = require('../serv
  * @param {Object} req - The request object containing the URL in the body.
  * @param {Object} res - The response object used to send back the extracted entities.
  */
-
-exports.extractEntitiesFromArticle = async (req, res) => {
+export const extractEntitiesFromArticle = async (req, res) => {
     const { url } = req.body;
 
     // Check if URL is provided
@@ -25,15 +24,15 @@ exports.extractEntitiesFromArticle = async (req, res) => {
         }
 
         // Extract entities from the article content
-        const summary = await summarizeText(articleContent.articleBody)
+        const summary = await summarizeText(articleContent.articleBody);
         const entities = await extractEntities(summary);
 
         // Send the response back to the client
         res.json({
             title: articleContent.headline,  // Article title
-            content: summary,
-            entities,                     // Extracted entities
-            source_url: url               // Original URL of the article
+            content: summary,                 // Summarized content
+            entities,                         // Extracted entities
+            source_url: url                   // Original URL of the article
         });
     } catch (error) {
         // Handle errors and send a response

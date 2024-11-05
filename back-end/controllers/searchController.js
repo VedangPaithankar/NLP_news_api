@@ -1,5 +1,5 @@
-const axios = require('axios'); // Make sure to include axios if it's not already imported
-const { searchArticlesByKeywords } = require('../services/nlpServices');
+import axios from 'axios'; // Import axios
+import { searchArticlesByKeywords } from '../services/nlpServices.js';
 
 /**
  * Searches for articles based on the provided keywords.
@@ -7,7 +7,7 @@ const { searchArticlesByKeywords } = require('../services/nlpServices');
  * @param {Object} req - The request object containing the query in the body.
  * @param {Object} res - The response object used to send back the search results.
  */
-exports.searchArticles = async (req, res) => {
+export const searchArticles = async (req, res) => {
     const { query } = req.body;
 
     // Check if query is provided

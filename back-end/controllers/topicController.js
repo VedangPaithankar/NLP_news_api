@@ -1,4 +1,4 @@
-const { fetchArticleContent, performTopicModeling } = require('../services/nlpServices');
+import { fetchArticleContent, performTopicModeling } from '../services/nlpServices.js';
 
 /**
  * Retrieves topics from multiple articles based on their URLs.
@@ -6,8 +6,7 @@ const { fetchArticleContent, performTopicModeling } = require('../services/nlpSe
  * @param {Object} req - The request object containing the list of article URLs.
  * @param {Object} res - The response object used to send back the topic modeling results.
  */
-
-exports.getTopics = async (req, res) => {
+export const getTopics = async (req, res) => {
     const { urls } = req.body;
 
     // Check if URLs are provided
