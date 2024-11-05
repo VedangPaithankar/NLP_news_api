@@ -131,7 +131,6 @@ async function extractEntities(text) {
             model: 'dslim/distilbert-NER',
             inputs: text
         });
-        console.log(entityRecognition)
         return entityRecognition;
     } catch (error) {
         throw new Error('Failed to extract entities');

@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'https://nlp-news-api.onrender.com/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 // Summarize Article
 export const summarizeArticle = (url) => {
