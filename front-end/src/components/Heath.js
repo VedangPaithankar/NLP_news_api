@@ -6,7 +6,7 @@ const Health = () => {
     useEffect(() => {
         const checkHealth = async () => {
             try {
-                const response = await fetch('http://localhost:5000/health');
+                const response = await fetch('https://nlp-news-api.onrender.com/health');
                 const data = await response.json();
                 // Check if the response contains success
                 if (response.ok && data.status === 'Server is up and running') {
